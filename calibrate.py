@@ -15,7 +15,7 @@ if __name__ == '__main__':
     d = np.zeros(sample_num); l = np.zeros(sample_num); r = np.zeros(sample_num);
 
     for i in range(sample_num):
-        car.set_duty_cycle((i+1)*((-1)**i)*30, (i+1)*((-1)**i)*30)
+        car.set_duty_cycle((i+1)*30)
         time.sleep(2)
         left1, right1 = encoder.get_speed()
         time.sleep(1)
@@ -24,14 +24,14 @@ if __name__ == '__main__':
         d[i] = (i+1)*30
         l[i] = int(left1 + left2)/2
         r[i] = int(right1 + right2)/2
-        car.set_duty_cycle(0, 0)
+        car.set_duty_cycle(0)
         time.sleep(3)
 
     print("Left speed: " + str(l))
     print("Right speed: " + str(r))
     
     encoder.command(0)
-    car.set_duty_cycle(0, 0)
+    car.set_duty_cycle(0)
     
     d = d.reshape(-1, 1)
     l = l.reshape(-1, 1)
