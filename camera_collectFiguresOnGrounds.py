@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import picamera
@@ -37,7 +39,7 @@ def camera_main2(share_obj, obj_b):
     print('AAsAA')
     with picamera.PiCamera() as camera:
         #camera.start_preview()
-        camera.resolution = (640, 480)
+        camera.resolution = (640, 480)      #set camera resolution
         # time.sleep(0.5)
         idx = 0
         paramSearch = None
