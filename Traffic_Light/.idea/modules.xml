@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AutoRCCar/AutoRCCar.iml" filepath="$PROJECT_DIR$/AutoRCCar/AutoRCCar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AutoTT/AutoTT.iml" filepath="$PROJECT_DIR$/AutoTT/AutoTT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Light_Detecting/Light_Detecting.iml" filepath="$PROJECT_DIR$/Light_Detecting/Light_Detecting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimpleTrafficLightDetection/SimpleTrafficLightDetection.iml" filepath="$PROJECT_DIR$/SimpleTrafficLightDetection/SimpleTrafficLightDetection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Traffic_Light.iml" filepath="$PROJECT_DIR$/.idea/Traffic_Light.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Traffic_Light_Detector/Traffic_Light_Detector.iml" filepath="$PROJECT_DIR$/Traffic_Light_Detector/Traffic_Light_Detector.iml" />
+    </modules>
+  </component>
+</project>
