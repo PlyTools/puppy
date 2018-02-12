@@ -46,7 +46,7 @@ while 1:
         stringData = recv_all(conn, int(length))
         data = numpy.fromstring(stringData, dtype='uint8')
         decimg=cv2.imdecode(data, 1)         #解码处理，返回mat图片
-        cv2.imshow('SERVER',decimg)
+        cv2.imshow('SERVER', decimg)
         cv2.imwrite('2.jpeg', decimg)
         if cv2.waitKey(10) == 27:
             break 
