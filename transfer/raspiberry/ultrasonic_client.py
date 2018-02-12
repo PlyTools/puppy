@@ -4,7 +4,7 @@ from socket import *
 import RPi.GPIO as GPIO
 import time
 
-host=('192.168.1.100', 8002)
+ultrasonic_host=('192.168.1.100', 8002)
 
 class Ultrasound:
 	TRIG = 38
@@ -35,7 +35,7 @@ class Ultrasound:
 def distanceStream(ultra):
     # create a socket and bind socket to the host
     client_socket = socket(AF_INET, SOCK_STREAM)
-    client_socket.connect(host)
+    client_socket.connect(ultrasonic_host)
     try:
         while True:
             # send data to the host every 0.5 sec

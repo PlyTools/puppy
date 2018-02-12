@@ -4,13 +4,14 @@ import socket
 import cv2
 import numpy
 
+stream_host = ('192.168.1.100', 8000)
+
 # socket.AF_INET用于服务器与服务器之间的网络通信
 # socket.SOCK_STREAM代表基于TCP的流式socket通信
 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 # 连接服务端
-address_server = ('127.0.0.1', 8000)
-sock.connect(address_server)
+sock.connect(stream_host)
 
 # 从摄像头采集图像
 frame = cv2.imread("1.jpeg")
