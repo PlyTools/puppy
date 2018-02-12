@@ -20,26 +20,15 @@ class StreamServer:
 
     def recv_size(self, sock, count):
         buf = b''
-        while count:
-            newbuf = sock.recv(count)
-            if not newbuf: return None
-            buf += newbuf
-            count -= len(newbuf)
-        return buf
-
-    # 接收图片
-    def recv_all(self, sock, count):
-        buf = b''
-        newbuf = sock.recv(count)
-        if not newbuf: return None
-        buf += newbuf
+        buf = sock.recv(count)
+        if not buf: return None
         return buf
 
     def receive(self):
         while 1:
             length = self.recv_size(self.conn, 16).decode() #首先接收来自客户端发送的大小信息
             if isinstance (length, str): #若成功接收到大小信息，进一步再接收整张图片
-                stringData = self.recv_all(self.conn, int(length))
+                stringData = self.recv_size(self.conn, int(length))
                 data = numpy.fromstring(stringData, dtype='uint8')
                 decimg=cv2.imdecode(data, 1)         #解码处理，返回mat图片
                 # cv2.imshow('SERVER', decimg)
@@ -50,3 +39,8 @@ class StreamServer:
     def __del__(self):
         self.sock.close()
         cv2.destroyAllWindows()
+    
+if __name__ == "__main__":
+    stream_host = ('192.168.1.100', 8000)
+    streamServer = StreamServer(stream_host)
+    streamServer.receive()
