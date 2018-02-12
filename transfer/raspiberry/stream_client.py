@@ -33,4 +33,3 @@ data_r = sock.recv(50)
 print (data_r)
 
 sock.close()
-cv2.destroyAllWindows()
