@@ -10,7 +10,7 @@ class StreamClient:
         self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         self.sock.connect(stream_host)
 
-    def transfer(self, data):
+    def send(self, data):
         stringData = data.tostring()
         # send the length of image after encoded
         self.sock.send(str(str(len(stringData)).ljust(16)).encode())
