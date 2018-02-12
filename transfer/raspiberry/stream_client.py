@@ -12,10 +12,9 @@ class StreamClient:
 
     def transfer(self, data):
         stringData = data.tostring()
-        # 首先发送图片编码后的长度
+        # send the length of image after encoded
         self.sock.send(str(str(len(stringData)).ljust(16)).encode())
-        # 然后一个字节一个字节发送编码的内容
-        # 如果是python对python那么可以一次性发送，如果发给c++的server则必须分开发因为编码里面有字符串结束标志位，c++会截断
+        # send the data
         self.sock.send(stringData)
         
         data_r = self.sock.recv(50)
