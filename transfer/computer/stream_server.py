@@ -33,7 +33,7 @@ def recv_all(sock, count):
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # 设置地址与端口，如果是接收任意ip对本服务器的连接，地址栏可空，但端口必须设置
 
-s.bind(address) # 将Socket（套接字）绑定到地址
+s.bind(stream_host) # 将Socket（套接字）绑定到地址
 s.listen(1) # 开始监听TCP传入连接
 print ('Waiting for images...')
 # 接受TCP链接并返回（conn, addr），其中conn是新的套接字对象，可以用来接收和发送数据，addr是链接客户端的地址。
