@@ -3,13 +3,13 @@ __author__ = 'zhengwang'
 import socket
 import time
 
-host=('192.168.1.100', 8002)
+ultrasonic_host=('192.168.1.100', 8002)
 
 class SensorStreamingTest(object):
     def __init__(self):
         self.server_socket = socket.socket()
         print("initialize socket")
-        self.server_socket.bind(host)
+        self.server_socket.bind(ultrasonic_host)
         self.server_socket.listen(0)
         self.connection, self.client_address = self.server_socket.accept()
         self.streaming()
