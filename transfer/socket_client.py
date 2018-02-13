@@ -9,6 +9,7 @@ class SocketClient:
     def TCPClient(self, host, port):
         self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         self.sock.connect((host, port))
+        return self
 
     def send(self, data):
         stringData = str(data)

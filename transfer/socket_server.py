@@ -46,8 +46,9 @@ class UltraStreamHandler(socketserver.BaseRequestHandler):
 
 class SocketServer(object):
     def TCPServer(self, host, port, Handler):
-        server = socketserver.ThreadingTCPServer((host, port), Handler)
-        server.serve_forever()
+        self.server = socketserver.ThreadingTCPServer((host, port), Handler)
+        self.server.serve_forever()
+        return self
 
 if __name__ == "__main__":
     videoServer = SocketServer().TCPServer('192.168.1.100', 8000, VideoStreamHandler)
