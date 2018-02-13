@@ -19,7 +19,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     # 接收图片
     def recv_all(self, sock, count):
-        buf = ''
+        buf = b''
         while count:
             # 这里每次只接收一个字节的原因是增强python与C++的兼容性
             # python可以发送任意的字符串，包括乱码，但C++发送的字符中不能包含'\0'，也就是字符串结束标志位
