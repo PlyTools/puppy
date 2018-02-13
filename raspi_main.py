@@ -14,6 +14,6 @@ if __name__ == "__main__":
 
     # send data
     while True:
-        videoClient.send(camera.getFrameArray())
-        # ultraClient.send(ultrasound.get_distance())
+        videoClient.sendVideo(camera.getFrameArray())
+        # ultraClient.sendUltra(ultrasound.get_distance())
 
