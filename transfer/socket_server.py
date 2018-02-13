@@ -8,9 +8,12 @@ import socketserver
 class VideoStreamHandler(socketserver.BaseRequestHandler):
     
     def recv_size(self, sock, count):
-        buf = ''
-        buf = sock.recv()
-        if not buf: return None
+        buf = b''
+        while count:
+            newbuf = sock.recv(count)
+            if not newbuf: return None
+            buf += newbuf
+            count -= len(newbuf)
         return buf
 
     def handle(self):
