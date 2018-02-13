@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import socket
 import cv2
 import numpy
@@ -7,14 +8,14 @@ import socketserver
 class VideoStreamHandler(socketserver.BaseRequestHandler):
     
     def recv_size(self, sock, count):
-        buf = b''
+        buf = ''
         buf = sock.recv(count)
         if not buf: return None
         return buf
 
     def handle(self):
         while True:
-            length = self.recv_size(self.request, 16).decode() #首先接收来自客户端发送的大小信息
+            length = self.recv_size(self.request, 16) #首先接收来自客户端发送的大小信息
             if length: #若成功接收到大小信息，进一步再接收整张图片
                 streamData = self.recv_size(self.request, int(length))
                 data = numpy.fromstring(streamData, dtype='uint8')

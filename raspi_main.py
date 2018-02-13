@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from control.camera import Camera
 from control.ultrasonic import Ultrasound
 from transfer.socket_client import SocketClient
