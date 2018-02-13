@@ -10,11 +10,13 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
     # 接受图片大小的信息
     def recv_size(self, sock, count):
         buf = b''
-        while count:
-            newbuf = sock.recv(count)
-            if not newbuf: return None
-            buf += newbuf
-            count -= len(newbuf)
+        buf = sock.recv(count)
+        if not buf: return None
+        # while count:
+        #     newbuf = sock.recv(count)
+        #     if not newbuf: return None
+        #     buf += newbuf
+        #     count -= len(newbuf)
         return buf
 
     # # 接收图片
