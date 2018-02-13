@@ -15,7 +15,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         while True:
-            length = self.recv_size(self.request, 16).decode("UTF-8") #首先接收来自客户端发送的大小信息
+            length = self.recv_size(self.request, 16).decode("utf-8") #首先接收来自客户端发送的大小信息
             if length: #若成功接收到大小信息，进一步再接收整张图片
                 streamData = self.recv_size(self.request, int(length))
                 data = numpy.fromstring(streamData, dtype='uint8')
@@ -24,7 +24,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 # cv2.imshow('SERVER', decimg)
                 cv2.imwrite('received.jpeg', decimg)
                 print('Image recieved successfully!')
-                self.request.send("Server has recieved messages!".encode("UTF-8"))
+                self.request.send("Server has recieved messages!".encode("utf-8"))
 
 class UltraStreamHandler(socketserver.BaseRequestHandler):
 
@@ -36,13 +36,13 @@ class UltraStreamHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         while True:
-            length = self.recv_size(self.request, 16).decode("UTF-8") #首先接收来自客户端发送的大小信息
+            length = self.recv_size(self.request, 16).decode("utf-8") #首先接收来自客户端发送的大小信息
             if isinstance (length, str): #若成功接收到大小信息，进一步再接收整张图片
-                streamData = self.recv_size(self.request, int(length.decode("UTF-8")))
+                streamData = self.recv_size(self.request, int(length.decode("utf-8")))
                 ultraDistance = float(streamData)
                 print("Distance: %0.1f cm" % ultraDistance)
 
-                self.request.send("Server has recieved distance!".encode("UTF-8"))
+                self.request.send("Server has recieved distance!".encode("utf-8"))
 
 class SocketServer(object):
     def TCPServer(self, host, port, Handler):
