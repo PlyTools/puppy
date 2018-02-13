@@ -7,10 +7,23 @@ import socketserver
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
     
+    # 接受图片大小的信息
     def recv_size(self, sock, count):
         buf = b''
         while count:
             newbuf = sock.recv(count)
+            if not newbuf: return None
+            buf += newbuf
+            count -= len(newbuf)
+        return buf
+
+    # 接收图片
+    def recv_all(self, sock, count):
+        buf = ''
+        while count:
+            # 这里每次只接收一个字节的原因是增强python与C++的兼容性
+            # python可以发送任意的字符串，包括乱码，但C++发送的字符中不能包含'\0'，也就是字符串结束标志位
+            newbuf = sock.recv(1)
             if not newbuf: return None
             buf += newbuf
             count -= len(newbuf)
@@ -22,7 +35,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
             print(type(length))
             print(length)
             if length: #若成功接收到大小信息，进一步再接收整张图片
-                streamData = self.recv_size(self.request, int(str(length, "utf-8")))
+                streamData = self.recv_all(self.request, int(str(length, "utf-8")))
                 data = numpy.fromstring(streamData, dtype='uint8')
                 decimg=cv2.imdecode(data, 1)         #解码处理，返回mat图片
                 
