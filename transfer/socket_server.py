@@ -32,10 +32,9 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
     def handle(self):
         while True:
             length = self.recv_size(self.request, 16)  #首先接收来自客户端发送的大小信息
-            print(type(length))
             print(length)
-            if length: #若成功接收到大小信息，进一步再接收整张图片
-                streamData = self.recv_all(self.request, int(str(length, "utf-8")))
+            if isinstance (length,str): #若成功接收到大小信息，进一步再接收整张图片
+                streamData = self.recv_all(self.request, int(length))
                 data = numpy.fromstring(streamData, dtype='uint8')
                 decimg=cv2.imdecode(data, 1)         #解码处理，返回mat图片
                 
