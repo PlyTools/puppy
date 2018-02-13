@@ -21,8 +21,8 @@ class Camera:
         return frameArray
         
     def getFrame(self):
-        frameArray = getFrameArray()
-        frame = cv2.imdecode(data, 1)
+        frameArray = self.getFrameArray()
+        frame = cv2.imdecode(frameArray, 1)
         return frame
         
 if __name__ == "__main__":
