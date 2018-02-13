@@ -6,9 +6,9 @@ import numpy as np
 from control.camera import Camera
 
 class SocketClient:
-    def TCPClient(self, stream_host = ('192.168.1.100', 8000)):
+    def TCPClient(self, host, port):
         self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.sock.connect(stream_host)
+        self.sock.connect((host, port))
 
     def send(self, data):
         stringData = str(data)

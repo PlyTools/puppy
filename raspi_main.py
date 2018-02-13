@@ -1,16 +1,19 @@
 from control.camera import Camera
 from control.ultrasonic import Ultrasound
-from transfer.raspiberry.stream_client import StreamClient
+from transfer.socket_client import SocketClient
 
 
 if __name__ == "__main__":
+    # create a client for video transfer
     camera = Camera()
-    image_host = ('192.168.1.100', 8000)
-    streamClient = StreamClient(image_host)
-    streamClient.send(camera.getFrameArray())
+    videoClient = SocketClient('192.168.1.100', 8000)
 
+    # create a client for ultrasound sensor transfer
     ultrasound = Ultrasound()
-    ultra_host = ('192.168.1.100', 8002)
-    streamClient = StreamClient(ultra_host)
-    streamClient.send(ultrasound.get_distance())
+    ultraClient = SocketClient('192.168.1.100', 8002)
+
+    # send data
+    while True:
+        videoClient.send(camera.getFrameArray())
+        ultraClient.send(ultrasound.get_distance())
 
