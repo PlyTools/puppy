@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*-coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 import socket
 import cv2
 import numpy as np
@@ -14,7 +14,7 @@ class SocketClient:
     def sendVideo(self, data):
         stringData = data.tostring()
         # send the length of image after encoded
-        self.sock.send(str(str(len(stringData)).ljust(16)).encode("utf-8"))
+        self.sock.send(str(str(len(stringData)).ljust(16)).encode())
         # send the data
         self.sock.send(stringData)
         
@@ -24,7 +24,7 @@ class SocketClient:
     def sendUltra(self, data):
         stringData = data.tostring()
         # send the length of image after encoded
-        self.sock.send(str(str(len(stringData)).ljust(16)).encode("utf-8"))
+        self.sock.send(str(str(len(stringData)).ljust(16)).encode())
         # send the data
         self.sock.send(stringData)
         
