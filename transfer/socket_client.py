@@ -16,7 +16,7 @@ class SocketClient:
         # send the length of image after encoded
         self.sock.sendall(bytes(str(len(stringData)), "utf-8"))
         # send the data
-        self.sock.send(stringData)
+        self.sock.sendall(stringData)
         
         data_r = self.sock.recv(50)
         print (data_r)
@@ -26,7 +26,7 @@ class SocketClient:
         # send the length of image after encoded
         self.sock.sendall(bytes(str(len(stringData)), "utf-8"))
         # send the data
-        self.sock.send(stringData)
+        self.sock.sendall(stringData)
         
         data_r = self.sock.recv(50)
         print (data_r)
