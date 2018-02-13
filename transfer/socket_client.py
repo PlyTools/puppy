@@ -14,7 +14,7 @@ class SocketClient:
     def sendVideo(self, data):
         stringData = data.tostring()
         # send the length of image after encoded
-        self.sock.send(str(str(len(stringData)).ljust(16)).encode())
+        self.sock.sendall(bytes(str(len(stringData)) + "\n", "utf-8"))
         # send the data
         self.sock.send(stringData)
         
@@ -24,7 +24,7 @@ class SocketClient:
     def sendUltra(self, data):
         stringData = data.tostring()
         # send the length of image after encoded
-        self.sock.sendall(str(len(stringData)))
+        self.sock.sendall(bytes(str(len(stringData)) + "\n", "utf-8"))
         # send the data
         self.sock.send(stringData)
         
