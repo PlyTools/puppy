@@ -6,11 +6,11 @@ from transfer.socket_client import SocketClient
 if __name__ == "__main__":
     # create a client for video transfer
     camera = Camera()
-    videoClient = SocketClient('192.168.1.100', 8000)
+    videoClient = SocketClient().TCPClient('192.168.1.100', 8000)
 
     # create a client for ultrasound sensor transfer
     ultrasound = Ultrasound()
-    ultraClient = SocketClient('192.168.1.100', 8002)
+    ultraClient = SocketClient().TCPClient('192.168.1.100', 8002)
 
     # send data
     while True:
