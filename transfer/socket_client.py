@@ -24,7 +24,7 @@ class SocketClient:
     def sendUltra(self, data):
         stringData = data.tostring()
         # send the length of image after encoded
-        self.sock.send(str(str(len(stringData)).ljust(16)).encode())
+        self.sock.sendall(str(len(stringData)))
         # send the data
         self.sock.send(stringData)
         
