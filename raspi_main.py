@@ -8,9 +8,9 @@ if __name__ == "__main__":
     camera = Camera()
     videoClient = SocketClient().TCPClient('192.168.1.100', 8000)
 
-    # create a client for ultrasound sensor transfer
-    ultrasound = Ultrasound()
-    ultraClient = SocketClient().TCPClient('192.168.1.100', 8002)
+    # # create a client for ultrasound sensor transfer
+    # ultrasound = Ultrasound()
+    # ultraClient = SocketClient().TCPClient('192.168.1.100', 8002)
 
     # send data
     while True:
