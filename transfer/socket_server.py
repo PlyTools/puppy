@@ -87,9 +87,9 @@ class SocketServer(object):
 
     def TCPServer(self, host, port, Handler):
         self.server = socketserver.ThreadingTCPServer((host, port), Handler)
-        # server = threading.Thread(target = self.server.serve_forever)
-        # server.start()
-        self.server.serve_forever()
+        server = threading.Thread(target = self.server.serve_forever)
+        server.start()
+        # self.server.serve_forever()
         return self
 
 if __name__ == "__main__":
