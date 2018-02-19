@@ -6,16 +6,18 @@ from transfer.socket_server import *
 
 
 if __name__ == "__main__":
+    raspi_ip = '192.168.1.111'
     # receive lane params and control kitte to movie
-    paramsServer = SocketServer().TCPServer('192.168.1.111', 8000, ParamsStreamHandler)
+    paramsServer = SocketServer().TCPServer(raspi_ip, 8000, ParamsStreamHandler)
 
+    compu_ip = '192.168.1.103'
     # create a client for video transfer
     camera = Camera()
-    videoClient = SocketClient().TCPClient('192.168.1.100', 8000)
+    videoClient = SocketClient().TCPClient(compu_ip, 8000)
 
     # # create a client for ultrasound sensor transfer
     # ultrasound = Ultrasound()
-    # ultraClient = SocketClient().TCPClient('192.168.1.100', 8002)
+    # ultraClient = SocketClient().TCPClient(compu_ip, 8002)
 
     # send data
     while True:

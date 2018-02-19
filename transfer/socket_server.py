@@ -10,6 +10,7 @@ from transfer.socket_client import SocketClient
 from lane.laneline_coord import *
 
 
+
 class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     def __init__(self):
@@ -88,5 +89,6 @@ class SocketServer(object):
         return self
 
 if __name__ == "__main__":
-    videoServer = SocketServer().TCPServer('192.168.1.100', 8000, VideoStreamHandler)
-    # ultraServer = SocketServer().TCPServer('192.168.1.100', 8002, UltraStreamHandler)
+    compu_ip = '192.168.1.103'
+    videoServer = SocketServer().TCPServer(compu_ip, 8000, VideoStreamHandler)
+    # ultraServer = SocketServer().TCPServer(compu_ip, 8002, UltraStreamHandler)

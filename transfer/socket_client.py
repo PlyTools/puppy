@@ -3,7 +3,6 @@
 import socket
 import cv2
 import numpy as np
-from control.camera import Camera
 
 class SocketClient:
     def TCPClient(self, host, port):
