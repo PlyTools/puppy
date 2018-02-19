@@ -27,5 +27,6 @@ if __name__ == "__main__":
         print(camera.getFrameArray().tostring())
         print(type(camera.getFrameArray().tostring()))
         videoClient.send(camera.getFrameArray().tostring())
+        break
         # ultraClient.send(ultrasound.get_distance())
 
