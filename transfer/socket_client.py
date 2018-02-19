@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 
 class SocketClient:
+    
     def TCPClient(self, host, port):
         self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         self.sock.connect((host, port))
