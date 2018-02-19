@@ -5,6 +5,7 @@ import cv2
 import socketserver
 import sys
 import numpy as np
+import threading
 sys.path.append("../")
 from transfer.socket_client import SocketClient
 from lane.laneline_coord import *
@@ -15,7 +16,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     def __init__(self):
         super().__init__()
-        self.paramsServer = SocketClient().TCPClient('192.168.1.111', 8000)
+        # self.paramsServer = SocketClient().TCPClient('192.168.1.111', 8000)
     
     # 接受图片大小的信息
     def recv_size(self, sock, count):
@@ -85,7 +86,7 @@ class SocketServer(object):
 
     def TCPServer(self, host, port, Handler):
         self.server = socketserver.ThreadingTCPServer((host, port), Handler)
-        self.server.serve_forever()
+        threading.Thread(self.server.serve_forever())
         return self
 
 if __name__ == "__main__":
