@@ -37,7 +37,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 data = np.fromstring(stringData, dtype='uint8')
                 img = cv2.imdecode(data, 1)         #解码处理，返回mat图片
                 # cv2.imshow('SERVER', img)
-                # cv2.imwrite('received.jpeg', img)
+                cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
                 params = processImage(img, M, initParams, refPos)
                 print("Server has recieved message!")
