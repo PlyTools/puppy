@@ -40,7 +40,7 @@ def loss(p, img, refPos):
     idx2 = filter(lambda x: x[0]<100 and x[0]>0, np.concatenate([x12, y]).reshape(-1,2, order='F'))
     idx3 = filter(lambda x: x[0]<100 and x[0]>0, np.concatenate([x21, y]).reshape(-1,2, order='F'))
     idx4 = filter(lambda x: x[0]<100 and x[0]>0, np.concatenate([x22, y]).reshape(-1,2, order='F'))
-    Idx = np.array(idx1 + idx2 + idx3 + idx4)
+    Idx = np.array(np.array(idx1) + np.array(idx2) + np.array(idx3) + np.array(idx4))
     Idxnear = Idx[Idx[:,1] > 170]
     return np.sum(img[Idx[:,1], Idx[:,0]]>0) + 20* np.sum(img[Idxnear[:,1], Idxnear[:,0]]>0)
 
