@@ -9,6 +9,7 @@ import threading
 sys.path.append("../")
 from transfer.socket_client import SocketClient
 from lane.laneline_coord import *
+from config import config
 
 raspi_ip = '192.168.1.111'
 port = 8000
@@ -31,9 +32,9 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
         return buf
 
     def handle(self):
-        if not parasInit:
+        if not config.parasInit:
             self.paramsClient = SocketClient().TCPClient(raspi_ip, port)
-            parasInit = True
+            config.parasInit = True
         while True:
             length = self.recv_size(self.request, 16).decode()  #首先接收来自客户端发送的大小信息
             if isinstance(length, str): #若成功接收到大小信息，进一步再接收整张图片
