@@ -2,48 +2,46 @@
 # -*- coding: utf-8 -*-
 import socket
 import cv2
-import numpy
 import socketserver
+import sys
+import numpy as np
+sys.path.append("../")
+from transfer.socket_client import SocketClient
+from lane.laneline_coord import *
+
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
+
+    def __init__(self):
+        super().__init__()
+        self.paramsServer = SocketClient().TCPClient('192.168.1.111', 8000)
     
     # 接受图片大小的信息
     def recv_size(self, sock, count):
         buf = b''
-        buf = sock.recv(count)
-        if not buf: return None
-        # while count:
-        #     newbuf = sock.recv(count)
-        #     if not newbuf: return None
-        #     buf += newbuf
-        #     count -= len(newbuf)
+        # buf = sock.recv(count)
+        # if not buf: return None
+        while count:
+            newbuf = sock.recv(count)
+            if not newbuf: return None
+            buf += newbuf
+            count -= len(newbuf)
         return buf
-
-    # # 接收图片
-    # def recv_all(self, sock, count):
-    #     buf = b''
-    #     while count:
-    #         # 这里每次只接收一个字节的原因是增强python与C++的兼容性
-    #         # python可以发送任意的字符串，包括乱码，但C++发送的字符中不能包含'\0'，也就是字符串结束标志位
-    #         newbuf = sock.recv(1)
-    #         if not newbuf: return None
-    #         buf += newbuf
-    #         count -= len(newbuf)
-    #     return buf
 
     def handle(self):
         while True:
-            length = self.recv_size(self.request, 16)  #首先接收来自客户端发送的大小信息
-            print(length)
-            if isinstance (length.decode(), str): #若成功接收到大小信息，进一步再接收整张图片
+            length = self.recv_size(self.request, 16).decode()  #首先接收来自客户端发送的大小信息
+            if isinstance(length, str): #若成功接收到大小信息，进一步再接收整张图片
                 stringData = self.recv_size(self.request, int(length))
-                data = numpy.fromstring(stringData, dtype='uint8')
-                decimg=cv2.imdecode(data, 1)         #解码处理，返回mat图片
-                
-                # cv2.imshow('SERVER', decimg)
-                cv2.imwrite('received.jpeg', decimg)
+                data = np.fromstring(stringData, dtype='uint8')
+                img=cv2.imdecode(data, 1)         #解码处理，返回mat图片
+                # cv2.imshow('SERVER', img)
+                # cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
+                params = processImage(img, M, initParams, refPos)
                 self.request.send("Server has recieved messages!".encode())
+                # send params to raspiberry
+                self.request.send(str(params).encode())
 
 class UltraStreamHandler(socketserver.BaseRequestHandler):
 
@@ -57,13 +55,33 @@ class UltraStreamHandler(socketserver.BaseRequestHandler):
         while True:
             length = self.recv_size(self.request, 16).decode() #首先接收来自客户端发送的大小信息
             if isinstance (length, str): #若成功接收到大小信息，进一步再接收整张图片
-                streamData = self.recv_size(self.request, int(length.decode()))
+                streamData = self.recv_size(self.request, int(length))
                 ultraDistance = float(streamData)
                 print("Distance: %0.1f cm" % ultraDistance)
 
                 self.request.send("Server has recieved distance!".encode())
 
+class ParamsStreamHandler(socketserver.BaseRequestHandler):
+
+    def recv_size(self, sock, count):
+        buf = b''
+        buf = sock.recv(count)
+        if not buf: return None
+        return buf
+
+    def handle(self):
+        while True:
+            length = self.recv_size(self.request, 16).decode() #首先接收来自客户端发送的大小信息
+            if isinstance (length, str): #若成功接收到大小信息，进一步再接收整张图片
+                streamData = self.recv_size(self.request, int(length))
+                params = np.fromstring(streamData)
+                print("Distance: %0.1f cm" % params)
+
+                # TODO:Control kitte according to params
+                self.request.send("Server has recieved params!".encode())
+
 class SocketServer(object):
+
     def TCPServer(self, host, port, Handler):
         self.server = socketserver.ThreadingTCPServer((host, port), Handler)
         self.server.serve_forever()

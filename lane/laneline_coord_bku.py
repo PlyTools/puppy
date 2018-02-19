@@ -46,6 +46,9 @@ Prepare:
         For 2nd, 3rd image, one image were processed in 0.50, 0.55 second and returned a np array respectly.
 '''
 
+host = "192.168.1.111:8080"  # ip on raspberryPi
+hoststr = 'http://' + host + '/?action=stream'
+
 src = np.array([[
     [0, 350],
     [240,240],
@@ -68,6 +71,22 @@ initParams = [
         np.arange(-15, 15, 2)
 ]
 refPos = [50, 180] # The position of the top-center of chess-board on the ground in img_t
+    
+def imageReadFromraspberryPi(hoststr):
+    stream=urllib2.urlopen(hoststr)
+    bytes=''
+    while True:
+        bytes+=stream.read(1024)
+        a = bytes.find('\xff\xd8')
+        b = bytes.find('\xff\xd9')
+        if a!=-1 and b!=-1:
+            break
+        
+    jpg = bytes[a:b+2]
+    bytes= bytes[b+2:]
+    img = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),flags=1)
+    # flipped = cv2.flip(img, 0)
+    return img
 
 
 def perspectTransform(img, M_trans):
@@ -82,30 +101,34 @@ def perspectTransform(img, M_trans):
     return img_t
 
 
-def processImage(img, M_trans, initParams, refPos):
+def processImage(hoststr, M_trans, initParams, refPos):
     seedParams = []
     timePrev = time.time()
-    img_t = perspectTransform(img, M_trans)
-    paramSearch = None
-    if len(seedParams) == 0:
-        paramSearch = initParams
-    else:
-        lla = np.linspace(seedParams[0]-(initParams[0][1]-initParams[0][0]),
-                            seedParams[0]+(initParams[0][1]-initParams[0][0]), 3)
-        llb = np.linspace(seedParams[1]-(initParams[1][1]-initParams[1][0]),
-                            seedParams[1]+(initParams[1][1]-initParams[1][0]), 3)
-        llc = np.arange(seedParams[2]-2, seedParams[2]+3, 2)
-        lld = np.arange(seedParams[3]-1, seedParams[3]+2)
-        paramSearch = [lla, llb, llc, lld]
+    while 1:
+        img = imageReadFromraspberryPi(hoststr)
+        img_t = perspectTransform(img, M_trans)
+        paramSearch = None
+        if len(seedParams) == 0:
+            paramSearch = initParams
+        else:
+            lla = np.linspace(seedParams[0]-(initParams[0][1]-initParams[0][0]),
+                              seedParams[0]+(initParams[0][1]-initParams[0][0]), 3)
+            llb = np.linspace(seedParams[1]-(initParams[1][1]-initParams[1][0]),
+                              seedParams[1]+(initParams[1][1]-initParams[1][0]), 3)
+            llc = np.arange(seedParams[2]-2, seedParams[2]+3, 2)
+            lld = np.arange(seedParams[3]-1, seedParams[3]+2)
+            paramSearch = [lla, llb, llc, lld]
 
-    coords, params = getBestParams(img_t, paramSearch, refPos)
-    score = params[4]
-    if score < 50:
-        seedParams = []
-    else:
-        seedParams = params
-    
-    timeNow = time.time()
-    print(params, timeNow - timePrev)
-    timePrev = timeNow
-    return params
+        coords,params = getBestParams(img_t, paramSearch, refPos)
+        score = params[4]
+        if score < 50:
+            seedParams = []
+        else:
+            seedParams = params
+        
+        timeNow = time.time()
+        print(params, timeNow - timePrev)
+        timePrev = timeNow
+
+if __name__ == '__main__':
+    processImage(hoststr, M, initParams, refPos)
