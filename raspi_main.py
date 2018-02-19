@@ -24,6 +24,8 @@ if __name__ == "__main__":
     print("Running...")
     # send data
     while True:
+        print(camera.getFrameArray().tostring())
+        print(type(camera.getFrameArray().tostring()))
         videoClient.send(camera.getFrameArray().tostring())
         # ultraClient.send(ultrasound.get_distance())
 
