@@ -12,10 +12,10 @@ from lane.laneline_coord import *
 
 raspi_ip = '192.168.1.111'
 port = 8000
-paramsClient = SocketClient().TCPClient(raspi_ip, port)
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
 
+    paramsClient = SocketClient().TCPClient(raspi_ip, port)
     # 接受图片大小的信息
     def recv_size(self, sock, count):
         buf = b''
@@ -41,7 +41,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 params = processImage(img, M, initParams, refPos)
                 self.request.send("Server has recieved image!".encode())
                 # send params to raspiberry
-                paramsClient.send(str(params).encode())
+                self.paramsClient.send(str(params).encode())
 
 class UltraStreamHandler(socketserver.BaseRequestHandler):
 
