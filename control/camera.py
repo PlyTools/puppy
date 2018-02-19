@@ -12,6 +12,7 @@ class Camera:
         self.camera = PiCamera()
         self.camera.resolution = (640, 480)
         self.camera.framerate = 32
+        self.camera.vflip = True
         time.sleep(2)
 
     def getFrameArray(self):
