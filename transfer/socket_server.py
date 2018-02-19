@@ -14,7 +14,6 @@ raspi_ip = '192.168.1.111'
 port = 8000
 paramsClient = SocketClient().TCPClient(raspi_ip, port)
 
-
 class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     # 接受图片大小的信息
