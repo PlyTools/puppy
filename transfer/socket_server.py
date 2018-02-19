@@ -85,8 +85,10 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
 class SocketServer(object):
 
     def TCPServer(self, host, port, Handler):
+        
         self.server = socketserver.ThreadingTCPServer((host, port), Handler)
-        threading.Thread(self.server.serve_forever())
+        server = threading.Thread(self.server.serve_forever())
+        server.start()
         return self
 
 if __name__ == "__main__":
