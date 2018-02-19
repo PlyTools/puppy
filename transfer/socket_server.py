@@ -10,9 +10,15 @@ sys.path.append("../")
 from transfer.socket_client import SocketClient
 from lane.laneline_coord import *
 
-
+raspi_ip = '192.168.1.111'
+port = 8000
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
+
+    def __init__(self):
+        socketserver.BaseRequestHandler.__init__()
+        self.paramsClient = SocketClient().TCPClient(raspi_ip, port)
+        
 
     # 接受图片大小的信息
     def recv_size(self, sock, count):
@@ -37,9 +43,9 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 # cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
                 params = processImage(img, M, initParams, refPos)
-                self.request.send("Server has recieved messages!\n".encode())
+                self.request.send("Server has recieved image!".encode())
                 # send params to raspiberry
-                self.request.send(str(params).encode())
+                self.paramsClient.send(str(params).encode())
 
 class UltraStreamHandler(socketserver.BaseRequestHandler):
 
@@ -69,14 +75,13 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         while True:
-            length = self.recv_size(self.request, 16).decode() #首先接收来自客户端发送的大小信息
-            if isinstance (length, str): #若成功接收到大小信息，进一步再接收整张图片
+            length = self.recv_size(self.request, 16).decode() 
+            if isinstance (length, str):
                 streamData = self.recv_size(self.request, int(length))
-                params = np.fromstring(streamData)
-                print("Distance: %0.1f cm" % params)
+                params = str(streamData)
+                print(params)
 
                 # TODO:Control kitte according to params
-                self.request.send("Server has recieved params!".encode())
 
 class SocketServer(object):
 
