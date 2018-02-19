@@ -14,10 +14,6 @@ from lane.laneline_coord import *
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
 
-    def __init__(self):
-        super().__init__()
-        # self.paramsServer = SocketClient().TCPClient('192.168.1.111', 8000)
-    
     # 接受图片大小的信息
     def recv_size(self, sock, count):
         buf = b''
