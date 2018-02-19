@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from transfer.socket_server import *
-
+from config import config
 
 if __name__ == "__main__":
-    raspi_ip = '192.168.1.111'
-    compu_ip = '192.168.1.103'
-    
-    videoServer = SocketServer().TCPServer(compu_ip, 8000, VideoStreamHandler)
-    # ultraServer = SocketServer().TCPServer(compu_ip, 8002, UltraStreamHandler)
+    videoServer = SocketServer().TCPServer(config.compu_ip, config.video_port, VideoStreamHandler)
+    # ultraServer = SocketServer().TCPServer(config.compu_ip, config.ultra_port, UltraStreamHandler)
 

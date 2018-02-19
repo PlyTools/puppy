@@ -11,11 +11,6 @@ from transfer.socket_client import SocketClient
 from lane.laneline_coord import *
 from config import config
 
-raspi_ip = '192.168.1.111'
-port = 8000
-global parasInit
-parasInit = False
-
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
 
@@ -33,7 +28,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         if not config.parasInit:
-            self.paramsClient = SocketClient().TCPClient(raspi_ip, port)
+            self.paramsClient = SocketClient().TCPClient(config.raspi_ip, config.paras_port)
             config.parasInit = True
         while True:
             length = self.recv_size(self.request, 16).decode()  #首先接收来自客户端发送的大小信息
@@ -45,7 +40,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 # cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
                 params = processImage(img, M, initParams, refPos)
-                self.request.send("Server has recieved image!".encode())
+                print("Server has recieved message!")
                 # send params to raspiberry
                 self.paramsClient.send(str(params).encode())
 
@@ -82,7 +77,7 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
                 streamData = self.recv_size(self.request, int(length))
                 params = str(streamData)
                 print(params)
-
+                print("Server has recieved message!")
                 # TODO:Control kitte according to params
 
 class SocketServer(object):
@@ -95,6 +90,5 @@ class SocketServer(object):
         return self
 
 if __name__ == "__main__":
-    compu_ip = '192.168.1.103'
-    videoServer = SocketServer().TCPServer(compu_ip, 8000, VideoStreamHandler)
-    # ultraServer = SocketServer().TCPServer(compu_ip, 8002, UltraStreamHandler)
+    videoServer = SocketServer().TCPServer(config.compu_ip, config.video_port, VideoStreamHandler)
+    # ultraServer = SocketServer().TCPServer(config.compu_ip, config.ultra_port, UltraStreamHandler)

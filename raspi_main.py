@@ -3,29 +3,26 @@ from control.camera import Camera
 from control.ultrasonic import Ultrasound
 from transfer.socket_client import SocketClient
 from transfer.socket_server import *
+from config import config
 
 
 if __name__ == "__main__":
-    print("Create TCP Server thread to receive params stream")
-    raspi_ip = '192.168.1.111'
     # receive lane params and control kitte to movie
-    paramsServer = SocketServer().TCPServer(raspi_ip, 8000, ParamsStreamHandler)
+    print("Create TCP Server thread to receive params stream")
+    paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
 
-    print("Create TCP Client thread to send video stream")
-    compu_ip = '192.168.1.103'
     # create a client for video transfer
+    print("Create TCP Client thread to send video stream")
     camera = Camera()
-    videoClient = SocketClient().TCPClient(compu_ip, 8000)
+    videoClient = SocketClient().TCPClient(config.compu_ip, config.video_port)
 
     # # create a client for ultrasound sensor transfer
     # ultrasound = Ultrasound()
-    # ultraClient = SocketClient().TCPClient(compu_ip, 8002)
+    # ultraClient = SocketClient().TCPClient(config.compu_ip, config.ultra_port)
 
     print("Running...")
     # send data
     while True:
-        # print(camera.getFrameArray().tostring())
-        # print(type(camera.getFrameArray().tostring()))
         videoClient.send(camera.getFrameArray().tostring())
         # ultraClient.send(ultrasound.get_distance())
 
