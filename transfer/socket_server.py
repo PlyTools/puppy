@@ -36,7 +36,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
             if isinstance(length, str): #若成功接收到大小信息，进一步再接收整张图片
                 stringData = self.recv_size(self.request, int(length))
                 data = np.fromstring(stringData, dtype='uint8')
-                img=cv2.imdecode(data, 1)         #解码处理，返回mat图片
+                img = cv2.imdecode(data, 1)         #解码处理，返回mat图片
                 # cv2.imshow('SERVER', img)
                 # cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
@@ -86,8 +86,9 @@ class SocketServer(object):
 
     def TCPServer(self, host, port, Handler):
         self.server = socketserver.ThreadingTCPServer((host, port), Handler)
-        server = threading.Thread(target = self.server.serve_forever)
-        server.start()
+        # server = threading.Thread(target = self.server.serve_forever)
+        # server.start()
+        self.server.serve_forever()
         return self
 
 if __name__ == "__main__":
