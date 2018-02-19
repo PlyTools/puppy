@@ -12,6 +12,7 @@ from lane.laneline_coord import *
 
 raspi_ip = '192.168.1.111'
 port = 8000
+global parasInit
 parasInit = False
 
 
@@ -30,7 +31,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
         return buf
 
     def handle(self):
-        if not parasInit: 
+        if not parasInit:
             self.paramsClient = SocketClient().TCPClient(raspi_ip, port)
             parasInit = True
         while True:
