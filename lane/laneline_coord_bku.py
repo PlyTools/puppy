@@ -76,7 +76,7 @@ def imageReadFromraspberryPi(hoststr):
     stream=request.urlopen(hoststr)
     bytes=b''
     while True:
-        bytes+=stream.read(1024)
+        bytes += stream.read(1024)
         a = bytes.find(b'\xff\xd8')
         b = bytes.find(b'\xff\xd9')
         if a!=-1 and b!=-1:

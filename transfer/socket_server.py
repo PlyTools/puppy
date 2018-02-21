@@ -25,20 +25,6 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
             buf += newbuf
             count -= len(newbuf)
         return buf
-    
-    def imageReadFromraspberryPi(self, sock):
-        bytes=b''
-        while True:
-            bytes += sock.recv(1024)
-            a = bytes.find(b'\xff\xd8')
-            b = bytes.find(b'\xff\xd9')
-            if a!=-1 and b!=-1:
-                break
-            
-        jpg = bytes[a:b+2]
-        bytes= bytes[b+2:]
-        img = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),flags=1)
-        return jpg
 
     def handle(self):
         if not config.parasInit:
@@ -47,9 +33,8 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
         while True:
             length = self.recv_size(self.request, 16).decode()  #首先接收来自客户端发送的大小信息
             if isinstance(length, str): #若成功接收到大小信息，进一步再接收整张图片
-                # bytesData = self.recv_size(self.request, int(length))
-                bytesData = self.imageReadFromraspberryPi(self.request)
-                img = cv2.imdecode(np.fromstring(bytesData, dtype=np.uint8),flags=1)   #解码处理，返回mat图片
+                bytesData = self.recv_size(self.request, int(length))
+                img = cv2.imdecode(np.fromstring(bytesData, dtype=np.uint8), flags=1)   #解码处理，返回mat图片
                 # cv2.imshow('SERVER', img)
                 cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
