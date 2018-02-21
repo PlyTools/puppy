@@ -49,8 +49,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
             if isinstance(length, str): #若成功接收到大小信息，进一步再接收整张图片
                 bytesData = self.recv_size(self.request, int(length))
                 # bytesData = self.imageReadFromraspberryPi(self.request)
-                # data = np.fromstring(stringData, dtype='uint8')
-                img = cv2.imdecode(bytesData, 1)         #解码处理，返回mat图片
+                img = cv2.imdecode(np.fromstring(bytesData, dtype=np.uint8),flags=1)   #解码处理，返回mat图片
                 # cv2.imshow('SERVER', img)
                 cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
