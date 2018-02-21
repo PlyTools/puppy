@@ -1,5 +1,5 @@
 import cv2
-import urllib2
+import urllib.request as request
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
@@ -73,20 +73,20 @@ initParams = [
 refPos = [50, 180] # The position of the top-center of chess-board on the ground in img_t
     
 def imageReadFromraspberryPi(hoststr):
-    stream=urllib2.urlopen(hoststr)
-    bytes=''
+    stream=request.urlopen(hoststr)
+    bytes=b''
     while True:
         bytes+=stream.read(1024)
-        a = bytes.find('\xff\xd8')
-        b = bytes.find('\xff\xd9')
+        a = bytes.find(b'\xff\xd8')
+        b = bytes.find(b'\xff\xd9')
         if a!=-1 and b!=-1:
             break
         
     jpg = bytes[a:b+2]
     bytes= bytes[b+2:]
     img = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),flags=1)
-    # flipped = cv2.flip(img, 0)
-    return img
+    flipped = cv2.flip(img, 0)
+    return flipped
 
 
 def perspectTransform(img, M_trans):
