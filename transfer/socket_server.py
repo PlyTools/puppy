@@ -11,7 +11,6 @@ from transfer.socket_client import SocketClient
 from lane.laneline_coord import *
 from config import config
 
-
 class VideoStreamHandler(socketserver.BaseRequestHandler):
 
     # 接受图片大小的信息
@@ -75,10 +74,11 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
             length = self.recv_size(self.request, 16).decode() 
             if isinstance (length, str):
                 streamData = self.recv_size(self.request, int(length))
-                params = str(streamData)
+                params = np.array(str(streamData), format=np.float)
                 print(params)
                 print("Server has recieved message!")
                 # TODO:Control kitte according to params
+
 
 class SocketServer(object):
 

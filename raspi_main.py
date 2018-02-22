@@ -12,7 +12,7 @@ if __name__ == "__main__":
     print("Create TCP Server thread to receive params stream")
     paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
 
-    os.system('tools/remote_camera.sh')
+    # os.system('tools/remote_camera.sh')
 
     # create a client for video stream transmission
     print("Create TCP Client thread to send video stream")
