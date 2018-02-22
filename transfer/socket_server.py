@@ -75,8 +75,6 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
             if isinstance (length, str):
                 streamData = self.recv_size(self.request, int(length))
                 params = np.array(str(streamData).replace('\n', ''))
-                print(type(params))
-                print(params)
                 print("Server has recieved message!")
                 # TODO:Control kitte according to params
 
