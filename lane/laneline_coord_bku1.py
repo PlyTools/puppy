@@ -84,6 +84,7 @@ def imageReadFromraspberryPi(hoststr):
         
     jpg = bytes[a:b+2]
     bytes= bytes[b+2:]
+    print(jpg)
     img = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),flags=1)
     flipped = cv2.flip(img, 0)
     return flipped

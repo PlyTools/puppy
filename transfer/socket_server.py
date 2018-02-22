@@ -34,6 +34,7 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
             length = self.recv_size(self.request, 16).decode()  #首先接收来自客户端发送的大小信息
             if isinstance(length, str): #若成功接收到大小信息，进一步再接收整张图片
                 bytesData = self.recv_size(self.request, int(length))
+                print(bytesData)
                 img = cv2.imdecode(np.fromstring(bytesData, dtype=np.uint8), flags=1)   #解码处理，返回mat图片
                 # cv2.imshow('SERVER', img)
                 cv2.imwrite('received.jpeg', img)
