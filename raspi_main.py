@@ -8,9 +8,9 @@ from config import config
 
 
 if __name__ == "__main__":
-    # # receive lane params and control kitte to movie
-    # print("Create TCP Server thread to receive params stream")
-    # paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
+    # receive lane params and control kitte to movie
+    print("Create TCP Server thread to receive params stream")
+    paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
 
     os.system('tools/remote_camera.sh')
 
