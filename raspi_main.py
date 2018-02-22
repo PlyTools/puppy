@@ -3,13 +3,16 @@ from control.camera import Camera
 from control.ultrasonic import Ultrasound
 from transfer.socket_client import SocketClient
 from transfer.socket_server import *
+import os
 from config import config
 
 
 if __name__ == "__main__":
-    # receive lane params and control kitte to movie
-    print("Create TCP Server thread to receive params stream")
-    paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
+    # # receive lane params and control kitte to movie
+    # print("Create TCP Server thread to receive params stream")
+    # paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
+
+    os.system('tools/remote_camera.sh')
 
     # create a client for video stream transmission
     print("Create TCP Client thread to send video stream")
