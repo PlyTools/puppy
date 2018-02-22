@@ -5,6 +5,8 @@ from config import config
 
 if __name__ == "__main__":
     # videoServer = SocketServer().TCPServer(config.compu_ip, config.video_port, VideoStreamHandler)
-    bku1.processImage(bku1.hoststr, bku1.M, bku1.initParams, bku1.refPos)
+    paramsClient = SocketClient().TCPClient(config.raspi_ip, config.paras_port)
+    params = bku1.processImage(bku1.hoststr, bku1.M, bku1.initParams, bku1.refPos)
+    paramsClient.send(str(params).encode())
+    
     # ultraServer = SocketServer().TCPServer(config.compu_ip, config.ultra_port, UltraStreamHandler)
-
