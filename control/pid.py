@@ -12,8 +12,8 @@ class PID:
         self.Kp = P
         self.Ki = I
         self.Kd = D
+        
         self.set_point = set_point
-
         self.Derivator = Derivator
         self.Integrator = Integrator
         self.Integrator_max = Integrator_max
