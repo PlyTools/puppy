@@ -24,7 +24,7 @@ import cv2
 
 
 def t():
-    img = cv2.imread('traffic_sign/ts.jpg')
+    img = cv2.imread('traffic_sign/ts2.jpg')
 
     ts_detector = TrafficSignDetector()
     ts_detector.get_result(img)
