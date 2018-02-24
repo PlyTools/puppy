@@ -46,7 +46,7 @@ Prepare:
         For 2nd, 3rd image, one image were processed in 0.50, 0.55 second and returned a np array respectly.
 '''
 
-host = "192.168.1.111:8080"  # ip on raspberryPi
+host = "192.168.3.111:8080"  # ip on raspberryPi
 hoststr = 'http://' + host + '/?action=stream'
 
 src = np.array([[
@@ -130,7 +130,7 @@ def processImage(hoststr, M_trans, initParams, refPos):
         timeNow = time.time()
         print(params, timeNow - timePrev)
         timePrev = timeNow
-        return params
+        # return params
 
 if __name__ == '__main__':
     processImage(hoststr, M, initParams, refPos)
