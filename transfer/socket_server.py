@@ -39,10 +39,10 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 # print(bytesData)
                 img = cv2.imdecode(np.fromstring(bytesData, dtype=np.uint8), flags=1)   #解码处理，返回mat图片
                 # cv2.imshow('SERVER', img)
-                cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
                 config.params = processImage(img, M, config.params, refPos)
                 print("Server has recieved message!")
+                cv2.imwrite('temp/' + config.params[2] + " " + config.params[3] + ".jpeg", img)
                 # send params to raspiberry
                 self.paramsClient.send(str(config.params).encode())
 

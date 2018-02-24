@@ -12,7 +12,7 @@ class Camera:
         self.camera = PiCamera()
         self.camera.resolution = (640, 480)
         self.camera.framerate = 5
-        self.camera.vflip = True
+        self.camera.rotation = 180  
         time.sleep(2)
 
     def getFrameArray(self):
