@@ -12,8 +12,8 @@ sudo vim /etc/dhcpcd.conf
 ```
 interface wlan0       
 static ip_address=192.168.3.111            #static IP
-static routers=192.168.1.1                 #address of router
-static domain_name_servers=192.168.1.1 114.114.114.114     #address of DNS
+static routers=192.168.3.1                 #address of router
+static domain_name_servers=192.168.3.1 114.114.114.114     #address of DNS
 ```
 
 # Step 2: modify the ip config in config/config.py
