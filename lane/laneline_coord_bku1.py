@@ -86,7 +86,7 @@ def imageReadFromraspberryPi(hoststr):
     bytes= bytes[b+2:]
     # print(jpg)
     img = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),flags=1)
-    flipped = cv2.flip(img, 0)
+    flipped = cv2.flip(img, -1)
     return flipped
 
 
@@ -129,6 +129,7 @@ def processImage(hoststr, M_trans, initParams, refPos):
         
         timeNow = time.time()
         print(params, timeNow - timePrev)
+        cv2.imwrite('../temp/origin/' + str(params[2]) + " " + str(params[3]) + ".jpeg", img)
         timePrev = timeNow
 
 if __name__ == '__main__':
