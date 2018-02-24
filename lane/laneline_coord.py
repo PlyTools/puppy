@@ -83,7 +83,8 @@ def perspectTransform(img, M_trans):
     return img_t
 
 
-def processImage(img, M_trans, params, refPos, ):
+def processImage(img, M_trans, refPos, ):
+    params = config.params
     timePrev = time.time()
     while True:
         img_t = perspectTransform(img, M_trans)
@@ -99,15 +100,14 @@ def processImage(img, M_trans, params, refPos, ):
             lld = np.arange(params[3]-1, params[3]+2)
             paramSearch = [lla, llb, llc, lld]
 
-        coords, params = getBestParams(img_t, paramSearch, refPos)
-        score = params[4]
+        coords, new_params = getBestParams(img_t, paramSearch, refPos)
+        score = new_params[4]
         if score < 50:
             params = []
         else:
-            config.params = params
+            config.params = new_params
             break
     
     timeNow = time.time()
     print(params, timeNow - timePrev)
-    # timePrev = timeNow
     return params
