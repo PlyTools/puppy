@@ -83,8 +83,7 @@ def perspectTransform(img, M_trans):
     return img_t
 
 
-def processImage(img, M_trans, refPos, ):
-    params = config.params
+def processImage(img, M_trans, params, refPos):
     timePrev = time.time()
     while True:
         img_t = perspectTransform(img, M_trans)
@@ -105,7 +104,7 @@ def processImage(img, M_trans, refPos, ):
         if score < 50:
             params = []
         else:
-            config.params = new_params
+            params = new_params
             break
     
     timeNow = time.time()
