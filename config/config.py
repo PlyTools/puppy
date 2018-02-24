@@ -1,4 +1,4 @@
-parasInit = False
+params = False
 paras_port = 8000
 video_port = 8000
 ultra_port = 8002

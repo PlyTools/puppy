@@ -12,7 +12,7 @@ from lane.laneline_coord import *
 from config import config
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
-
+    # global label = 0
     # 接受图片大小的信息
     def recv_size(self, sock, count):
         buf = b''
@@ -26,6 +26,9 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
         return buf
 
     def handle(self):
+        # if not label:
+        #     print("label")
+        #     label = 1
         if not config.parasInit:
             self.paramsClient = SocketClient().TCPClient(config.raspi_ip, config.paras_port)
             config.parasInit = True
@@ -38,10 +41,10 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
                 # cv2.imshow('SERVER', img)
                 cv2.imwrite('received.jpeg', img)
                 print('Image recieved successfully!')
-                params = processImage(img, M, initParams, refPos)
+                config.params = processImage(img, M, config.params, refPos)
                 print("Server has recieved message!")
                 # send params to raspiberry
-                self.paramsClient.send(str(params).encode())
+                self.paramsClient.send(str(config.params).encode())
 
 class UltraStreamHandler(socketserver.BaseRequestHandler):
 

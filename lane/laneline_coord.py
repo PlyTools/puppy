@@ -82,28 +82,29 @@ def perspectTransform(img, M_trans):
     return img_t
 
 
-def processImage(img, M_trans, initParams, refPos):
-    seedParams = []
+def processImage(img, M_trans, params, refPos, ):
     timePrev = time.time()
-    img_t = perspectTransform(img, M_trans)
-    paramSearch = None
-    if len(seedParams) == 0:
-        paramSearch = initParams
-    else:
-        lla = np.linspace(seedParams[0]-(initParams[0][1]-initParams[0][0]),
-                            seedParams[0]+(initParams[0][1]-initParams[0][0]), 3)
-        llb = np.linspace(seedParams[1]-(initParams[1][1]-initParams[1][0]),
-                            seedParams[1]+(initParams[1][1]-initParams[1][0]), 3)
-        llc = np.arange(seedParams[2]-2, seedParams[2]+3, 2)
-        lld = np.arange(seedParams[3]-1, seedParams[3]+2)
-        paramSearch = [lla, llb, llc, lld]
+    while True:
+        img_t = perspectTransform(img, M_trans)
+        paramSearch = None
+        if len(params) == 0:
+            paramSearch = initParams
+        else:
+            lla = np.linspace(params[0]-(initParams[0][1]-initParams[0][0]),
+                                params[0]+(initParams[0][1]-initParams[0][0]), 3)
+            llb = np.linspace(params[1]-(initParams[1][1]-initParams[1][0]),
+                                params[1]+(initParams[1][1]-initParams[1][0]), 3)
+            llc = np.arange(params[2]-2, params[2]+3, 2)
+            lld = np.arange(params[3]-1, params[3]+2)
+            paramSearch = [lla, llb, llc, lld]
 
-    coords, params = getBestParams(img_t, paramSearch, refPos)
-    score = params[4]
-    if score < 50:
-        seedParams = []
-    else:
-        seedParams = params
+        coords, params = getBestParams(img_t, paramSearch, refPos)
+        score = params[4]
+        if score < 50:
+            params = []
+        else:
+            params = params
+            break
     
     timeNow = time.time()
     print(params, timeNow - timePrev)
