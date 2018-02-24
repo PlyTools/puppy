@@ -13,9 +13,9 @@ class SocketClient:
 
     def send(self, stringData):
         # send the length of stringData after encoded
-        self.sock.send(bytes(str(len(stringData)).ljust(16), "utf-8"))
+        self.sock.sendall(bytes(str(len(stringData)).ljust(16), "utf-8"))
         # send the data
-        self.sock.send(stringData)
+        self.sock.sendall(stringData)
 
 
     def __del__(self):

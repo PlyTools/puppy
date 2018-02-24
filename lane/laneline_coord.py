@@ -107,5 +107,5 @@ def processImage(img, M_trans, initParams, refPos):
     
     timeNow = time.time()
     print(params, timeNow - timePrev)
-    timePrev = timeNow
+    # timePrev = timeNow
     return params
