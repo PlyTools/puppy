@@ -130,7 +130,7 @@ def processImage(hoststr, M_trans, initParams, refPos):
         timeNow = time.time()
         print(params, timeNow - timePrev)
         timePrev = timeNow
-        # return params
+        return params
 
 if __name__ == '__main__':
     processImage(hoststr, M, initParams, refPos)
