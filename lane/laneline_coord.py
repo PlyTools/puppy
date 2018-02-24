@@ -92,9 +92,9 @@ def processImage(img, M_trans, params, refPos):
             paramSearch = initParams
         else:
             lla = np.linspace(params[0]-(initParams[0][1]-initParams[0][0]),
-                                params[0]+(initParams[0][1]-initParams[0][0]), 3)
+                              params[0]+(initParams[0][1]-initParams[0][0]), 3)
             llb = np.linspace(params[1]-(initParams[1][1]-initParams[1][0]),
-                                params[1]+(initParams[1][1]-initParams[1][0]), 3)
+                              params[1]+(initParams[1][1]-initParams[1][0]), 3)
             llc = np.arange(params[2]-2, params[2]+3, 2)
             lld = np.arange(params[3]-1, params[3]+2)
             paramSearch = [lla, llb, llc, lld]
@@ -104,9 +104,8 @@ def processImage(img, M_trans, params, refPos):
         if score < 50:
             params = []
         else:
-            params = new_params
-            break
+            timeNow = time.time()
+            print(params, timeNow - timePrev)
+            return params
     
-    timeNow = time.time()
-    print(params, timeNow - timePrev)
-    return params
+    
