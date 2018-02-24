@@ -72,6 +72,5 @@ def getBestParams(img, params, refPos):
 def PrevFilter(d, l_errors):
     if len(l_errors)==0:
         return d
-
     else:
         return d*0.5 + np.array(l_errors[-1]*0.5).mean()

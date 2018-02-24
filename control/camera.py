@@ -18,9 +18,9 @@ class Camera:
     def getFrameArray(self):
         stream = io.BytesIO()
         self.camera.capture(stream, format="jpeg", use_video_port=True)
-        frameArray = np.array(stream.getvalue())
+        # frameArray = np.array(stream.getvalue())
         #~ frameArray = np.fromstring(stream.getvalue(), dtype = np.uint8)
-        return frameArray
+        return stream.getvalue()
         
     def getFrame(self):
         frameArray = self.getFrameArray()
