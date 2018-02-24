@@ -2,8 +2,9 @@ import cv2
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
-
+sys.path.append("../")
 from lane.linesearch import *
+from config import config
 
 '''
 Prepare:
@@ -103,7 +104,7 @@ def processImage(img, M_trans, params, refPos, ):
         if score < 50:
             params = []
         else:
-            params = params
+            config.params = params
             break
     
     timeNow = time.time()
