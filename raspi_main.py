@@ -25,8 +25,8 @@ if __name__ == "__main__":
     # ultrasound = Ultrasound()
     # ultraClient = SocketClient().TCPClient(config.compu_ip, config.ultra_port)
 
-    # print("Running...")
-    # # send data
-    # while True:
-    #     videoClient.send(camera.getFrameArray())
+    print("Running...")
+    # send data
+    while True:
+        videoClient.send(camera.getFrameArray())
     #     ultraClient.send(ultrasound.get_distance())
