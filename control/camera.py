@@ -24,7 +24,7 @@ class Camera:
     def getFrame(self):
         streamValue = self.getFrameArray()
         frameArray = np.fromstring(streamValue, dtype = np.uint8)
-        frame = cv2.imdecode(frameArray, 1)
+        frame = cv2.imdecode(frameArray, flags=1)
         return frame
         
 if __name__ == "__main__":
