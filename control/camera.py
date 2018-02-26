@@ -22,8 +22,9 @@ class Camera:
         return stream.getvalue()
         
     def getFrame(self):
-        streamValue = self.getFrameArray()
-        frameArray = np.fromstring(streamValue, dtype = np.uint8)
+        stream = io.BytesIO()
+        self.camera.capture(stream, format="jpeg", use_video_port=True)
+        frameArray = np.fromstring(stream, dtype = np.uint8)
         frame = cv2.imdecode(frameArray, flags=1)
         return frame
         
