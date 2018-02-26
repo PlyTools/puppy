@@ -23,7 +23,7 @@ class Camera:
         
     def getFrame(self):
         streamValue = self.getFrameArray()
-        frameArray = np.array(streamValue)
+        frameArray = np.fromstring(streamValue, dtype = np.uint8)
         frame = cv2.imdecode(frameArray, 1)
         return frame
         
