@@ -7,10 +7,10 @@ import numpy as np
 
 class Car_Servo:
     #settings
-    PINOUT = 18; 
+    PINOUT = 18
     
-    PinHz  = 50;
-    DutyMin = 2.72;
+    PinHz  = 50
+    DutyMin = 2.72
     DutyMax = 12
     
     def __init__(self, angle = 90): #    angle = 0~180;
