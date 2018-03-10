@@ -1,4 +1,4 @@
-# kitte
+# puppy
 This is a control system of the little car, kitte.
 You need to follow the steps below to perform it.
 
