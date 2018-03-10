@@ -16,7 +16,7 @@ class Car_Servo:
     def __init__(self, angle = 90): #    angle = 0~180;
         self.angle   = angle
         self.pinduty = (self.angle/180.0)*(self.DutyMax-self.DutyMin)+self.DutyMin
-        
+
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.PINOUT, GPIO.OUT)
         GPIO.setwarnings(False)
@@ -26,13 +26,13 @@ class Car_Servo:
     def __del__(self):
         GPIO.cleanup()
         
-    def Set_angle(self,angle):
+    def Set_angle(self, angle):
         if angle>180:
             angle = 180
         elif angle < 0:
             angle = 0
         self.angle   = angle
-        self.pinduty = (self.angle/180.0)*(self.DutyMax-self.DutyMin)+self.DutyMin
+        self.pinduty = (self.angle/180.0)*(self.DutyMax - self.DutyMin) + self.DutyMin
         self.PINOUT.ChangeDutyCycle(self.pinduty)
         #time.sleep(5)
         #self.PINOUT.ChangeDutyCycle(0)

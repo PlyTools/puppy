@@ -69,6 +69,8 @@ initParams = [
         np.arange(-15, 15, 2)
 ]
 
+calibrate = 7
+
 refPos = [50, 180] # The position of the top-center of chess-board on the ground in img_t
 
 
@@ -102,6 +104,16 @@ def processImage(img, M_trans, params, refPos):
             paramSearch = [lla, llb, llc, lld]
 
         coords, new_params = getBestParams(img_t, paramSearch, refPos)
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.plot(coords[0], coords[4])
+        ax.plot(coords[1], coords[4])
+        ax.plot(coords[2], coords[4])
+        ax.plot(coords[3], coords[4])
+        ax.set_xlim(0,100)
+        ax.imshow(img_t, "gray")
+        fig.savefig("received.png")
+        # new_params[3] = new_params[3] - calibrate
         score = new_params[4]
         if score < 50:
             params = []
