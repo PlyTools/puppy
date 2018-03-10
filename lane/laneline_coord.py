@@ -47,10 +47,10 @@ Prepare:
 '''
 
 src = np.array([[
-    [0, 350],
-    [240,240],
-    [400,240],
-    [640,350]
+    [0, 400],
+    [255,280],
+    [370,280],
+    [640,400]
 ]]).astype(np.float32)
 
 dst = np.array([[
@@ -64,10 +64,11 @@ M = cv2.getPerspectiveTransform(src, dst)
 
 initParams = [
         np.linspace(0.001, 0.02, 10),
-        np.array(list(np.linspace(1.5, 50, 10)) + list(np.linspace(-50, 1.5, 10))),
-        np.arange( 40, 50, 2),
+        np.array(list(np.exp(np.linspace(0.5, 3, 8)) + list(np.exp(np.linspace(-3, -0.5, 8))))),
+        np.arange( 25, 40, 2),
         np.arange(-15, 15, 2)
 ]
+
 refPos = [50, 180] # The position of the top-center of chess-board on the ground in img_t
 
 
@@ -88,6 +89,7 @@ def processImage(img, M_trans, params, refPos):
     while True:
         img_t = perspectTransform(img, M_trans)
         paramSearch = None
+        img_t = ((img_t < 100)*255).astype(np.uint8)
         if len(params) == 0:
             paramSearch = initParams
         else:
