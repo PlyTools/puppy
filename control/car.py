@@ -92,12 +92,12 @@ class Car:
                 if len(c) !=0 :
                     if c in ['w', 's', 'q']:
                         if c == "w":
-                            forward = 20
+                            forward = 50
                             self.set_duty_cycle(forward)
                             #~ self.set_duty_cycle(40,40)
                             print("forward")
                         elif c == "s":
-                            back = 20
+                            back = 50
                             self.set_duty_cycle(-back)
                             #~ self.set_duty_cycle(-50,-50)
                             print("back")
