@@ -77,10 +77,14 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
             length = self.recv_size(self.request, 16).decode() 
             if isinstance (length, str):
                 streamData = self.recv_size(self.request, int(length))
-                params = np.array(str(streamData).replace('\n', ''))
-                print(params)
+                print(re.sub(r' +', " ", bytes.decode(streamData).replace('\n', ' ')))
+                params = np.array(re.sub(r' +', " ", bytes.decode(streamData).replace('\n', ' ')).split(" "))
+                print(params[4])
+                offset = pid.update(float(params[4]))
                 print("Server has recieved message!")
-                # TODO:Control kitte according to params
+                print(90 + 4*offset)
+                car.set_duty_cycle(10)
+                servo.set_angle(90 + 4*offset)
 
 
 class SocketServer(object):

@@ -47,10 +47,10 @@ Prepare:
 '''
 
 src = np.array([[
-    [0, 400],
-    [255,280],
-    [370,280],
-    [640,400]
+    [0, 450],
+    [300,300],
+    [400,300],
+    [640,450]
 ]]).astype(np.float32)
 
 dst = np.array([[
@@ -78,7 +78,6 @@ def perspectTransform(img, M_trans):
     # binarize image for white line
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = (gray<180).astype(np.uint8)*255
-    
     # perspectTransform binarized image
     img_t = cv2.warpPerspective(gray, M_trans, (100,200), cv2.WARP_INVERSE_MAP)
     img_t[180:,0:10] = 255
