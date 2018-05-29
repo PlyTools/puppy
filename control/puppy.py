@@ -32,8 +32,8 @@ class Puppy:
     
     def keep_speed(self):
         while True:
-            print("speed: " + self.speed)
-            print("real speed: " + self.get_speed())
+            print("speed: " + str(self.speed))
+            print("real speed: " + str(self.get_speed()))
             err_duty = self.pid.update(self.get_speed() - self.speed)
             self.duty += err_duty
             if self.duty > 60:
