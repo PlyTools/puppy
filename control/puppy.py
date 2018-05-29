@@ -31,18 +31,21 @@ class Puppy:
         
     
     def keep_speed(self):
-        while True:
-            print("speed: " + str(self.speed))
-            print("real speed: " + str(self.get_speed()))
-            err_duty = self.pid.update(self.get_speed() - self.speed)
-            print("err_duty: " + str(err_duty))            
-            self.duty += err_duty
-            if self.duty > 30:
-                self.duty = 30
-            elif self.duty < -30:
-                self.duty = -30
-            self.car.set_duty_cycle(self.duty)
-            time.sleep(1)
+        try:
+            while True:
+                print("speed: " + str(self.speed))
+                print("real speed: " + str(self.get_speed()))
+                err_duty = self.pid.update(self.get_speed() - self.speed)
+                print("err_duty: " + str(err_duty))            
+                self.duty += err_duty
+                if self.duty > 30:
+                    self.duty = 30
+                elif self.duty < -30:
+                    self.duty = -30
+                self.car.set_duty_cycle(self.duty)
+                time.sleep(1)
+        except KeyboardInterrupt:
+            self.__del__()
 
     def set_speed(self, speed):
         if self.speed == 0:
@@ -57,6 +60,7 @@ class Puppy:
         return self.ultrasound.get_distance()
 
     def __del__(self):
+        self.car.set_duty_cycle(0)
         self.car_speed.command(0)
         GPIO.cleanup() 
           
