@@ -21,7 +21,7 @@ class Puppy:
         self.duty = 0
         self.speed = 0
 
-        self.pid = PID(0.05, 0.01, 0.01)
+        self.pid = PID(0.05, 0.1, 0.01)
         self.car = Car()
         self.car_servo = Car_Servo()
         self.ultrasound = Ultrasound()
