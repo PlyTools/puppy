@@ -83,7 +83,7 @@ class Car_Speed:
         return self.distance
 
     def get_speed(self):
-        return  self.speed
+        return self.speed
 
 
     def test(self):
