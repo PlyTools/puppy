@@ -42,7 +42,7 @@ def loss(p, img, refPos):
     idx4 = filter(lambda x: x[0]<100 and x[0]>0, np.concatenate([x22, y]).reshape(-1,2, order='F'))
     Idx = np.array(list(idx1) + list(idx2) + list(idx3) + list(idx4))
     Idxnear = Idx[Idx[:,1] > 170]
-    return np.sum(img[Idx[:,1], Idx[:,0]]>0) + 20* np.sum(img[Idxnear[:,1], Idxnear[:,0]]>0)
+    return np.sum(img[Idx[:,1], Idx[:,0]]>0) + 10* np.sum(img[Idxnear[:,1], Idxnear[:,0]]>0)
 
 
 def getBestParams(img, params, refPos):

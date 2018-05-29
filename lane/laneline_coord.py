@@ -82,6 +82,8 @@ def perspectTransform(img, M_trans):
     img_t = cv2.warpPerspective(gray, M_trans, (100,200), cv2.WARP_INVERSE_MAP)
     img_t[180:,0:10] = 255
     img_t[180:,90:]  = 255
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(2, 2))  
+    img_t = cv2.erode(img_t,kernel)
     return img_t
 
 
