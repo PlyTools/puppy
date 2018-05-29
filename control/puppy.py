@@ -21,7 +21,7 @@ class Puppy:
         self.duty = 0
         self.speed = 0
 
-        self.pid = PID(0.05, 0.1, 0.5)
+        self.pid = PID(0.05, 0.01, 0.01)
         self.car = Car()
         self.car_servo = Car_Servo()
         self.ultrasound = Ultrasound()
@@ -42,6 +42,7 @@ class Puppy:
                     self.duty = 30
                 elif self.duty < -30:
                     self.duty = -30
+                print("real duty: " + str(self.duty))            
                 self.car.set_duty_cycle(self.duty)
                 time.sleep(1)
         except KeyboardInterrupt:
