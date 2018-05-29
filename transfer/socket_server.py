@@ -6,6 +6,7 @@ import socketserver
 import sys
 import numpy as np
 import threading
+sys.path.append("../")
 from config import config
 from lane.laneline_coord import *
 from transfer.socket_client import SocketClient
@@ -25,7 +26,6 @@ class VideoStreamHandler(socketserver.BaseRequestHandler):
         return buf
 
     def handle(self):
-        sys.path.append("../")
         if not config.parasInit:
             self.paramsClient = SocketClient().TCPClient(config.raspi_ip, config.paras_port)
             config.parasInit = True
