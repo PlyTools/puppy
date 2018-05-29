@@ -7,7 +7,8 @@ import RPi.GPIO as GPIO
 
 class Car_Speed:
     #settings
-    INA=16; INB=15
+    INA=15; INB=16
+
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(INA, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(INB, GPIO.IN, pull_up_down=GPIO.PUD_UP)

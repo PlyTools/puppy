@@ -35,13 +35,14 @@ class Puppy:
             print("speed: " + str(self.speed))
             print("real speed: " + str(self.get_speed()))
             err_duty = self.pid.update(self.get_speed() - self.speed)
+            print("err_duty: " + str(err_duty))            
             self.duty += err_duty
-            if self.duty > 60:
-                self.duty = 60
-            elif self.duty < -60:
-                self.duty = -60
+            if self.duty > 30:
+                self.duty = 30
+            elif self.duty < -30:
+                self.duty = -30
             self.car.set_duty_cycle(self.duty)
-            time.sleep(0.2)
+            time.sleep(1)
 
     def set_speed(self, speed):
         if self.speed == 0:
