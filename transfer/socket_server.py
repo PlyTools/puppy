@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
+import re
 import socket
 import cv2
 import socketserver
@@ -65,6 +65,11 @@ class UltraStreamHandler(socketserver.BaseRequestHandler):
                 self.request.send("Server has recieved distance!".encode())
 
 class ParamsStreamHandler(socketserver.BaseRequestHandler):
+    def setup(self):
+        from raspi_main import car, pid, servo
+        self.car = car
+        self.servo = servo
+        self.pid = pid
 
     def recv_size(self, sock, count):
         buf = b''
@@ -80,11 +85,11 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
                 print(re.sub(r' +', " ", bytes.decode(streamData).replace('\n', ' ')))
                 params = np.array(re.sub(r' +', " ", bytes.decode(streamData).replace('\n', ' ')).split(" "))
                 print(params[4])
-                offset = pid.update(float(params[4]))
+                offset = self.pid.update(float(params[4]))
                 print("Server has recieved message!")
                 print(90 + 4*offset)
-                car.set_duty_cycle(10)
-                servo.set_angle(90 + 4*offset)
+                self.car.set_duty_cycle(10)
+                self.servo.set_angle(90 + 4*offset)
 
 
 class SocketServer(object):

@@ -26,7 +26,7 @@ class Car_Servo:
     def __del__(self):
         GPIO.cleanup()
         
-    def Set_angle(self, angle):
+    def set_angle(self, angle):
         if angle>180:
             angle = 180
         elif angle < 0:
@@ -61,7 +61,7 @@ class Car_Servo:
                             ang = 180
                         elif ang < 0:
                             ang = 0        
-                        self.Set_angle(ang)
+                        self.set_angle(ang)
                         print("ang = %d "%ang)
                     
                         

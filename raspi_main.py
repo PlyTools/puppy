@@ -1,14 +1,21 @@
 # -*- coding: utf-8 -*-
-from control.camera import Camera
-from control.ultrasonic import Ultrasound
-from transfer.socket_client import SocketClient
-from transfer.socket_server import *
 import os
 import subprocess
-from config import config
+from control.pid import PID
+from control.car_servo import Car_Servo
+from control.car import Car
 
+pid = PID()
+car = Car()
+servo = Car_Servo()
 
 if __name__ == "__main__":
+    from control.ultrasonic import Ultrasound
+    from transfer.socket_client import SocketClient
+    from config import config
+    from transfer.socket_server import *
+    from control.camera import Camera
+    
     # receive lane params and control kitte to movie
     print("Create TCP Server thread to receive params stream")
     paramsServer = SocketServer().TCPServer(config.raspi_ip, config.paras_port, ParamsStreamHandler)
