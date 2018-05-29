@@ -44,10 +44,10 @@ class Puppy:
             time.sleep(0.2)
 
     def set_speed(self, speed):
-        self.speed = speed
         if self.speed == 0:
             speed_thread = Thread(target=Puppy.keep_speed, args=(self,))
-            speed_thread.start()        
+            speed_thread.start()   
+        self.speed = speed
 
     def get_speed(self):
         return self.car_speed.get_speed()
