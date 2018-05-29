@@ -85,7 +85,7 @@ class ParamsStreamHandler(socketserver.BaseRequestHandler):
                 offset = self.pid.update(float(params[4]))
                 print("Server has recieved message!")
                 print(90 + offset)
-                self.car.set_duty_cycle(6)
+                self.car.set_duty_cycle(7)
                 self.servo.set_angle(90 + offset)
 
 
