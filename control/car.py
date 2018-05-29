@@ -9,7 +9,7 @@ import numpy as np
 
 class Car:
     # settings  
-    IN1 = 11; IN2 = 12
+    IN1 = 12; IN2 = 11
     
     def __init__(self, pwm_hz = 50):
         GPIO.setmode(GPIO.BOARD)
