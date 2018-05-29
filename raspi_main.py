@@ -5,7 +5,7 @@ from control.pid import PID
 from control.car_servo import Car_Servo
 from control.car import Car
 
-pid = PID()
+pid = PID(1, 0.1, 1.5)
 car = Car()
 servo = Car_Servo()
 
