@@ -1,15 +1,33 @@
-import cv2
 import urllib.request as request
+from lane import settings
+from config import config
 import numpy as np
-import sys
-import matplotlib.pyplot as plt
+import cv2
+import os
 import time
 
 
-host = "183.172.54.178:8080"  # ip on raspberryPi
+'''
+Prepare:
+    In raspberryPi:
+
+    ```
+    cd Tools
+    bash change_network.sh wifi
+    bash remote_camera.sh
+    ```
+    
+    In PC
+    ```
+    config the raspi_ip in config module
+    ```
+'''
+
+
+host = config.raspi_ip + ":8080"  # ip on raspberryPi
 hoststr = 'http://' + host + '/?action=stream'
 
-def imageReadFromraspberryPi(hoststr):
+def read_image_from_RPi(hoststr):
     stream=request.urlopen(hoststr)
     bytes=b''
     while True:
@@ -21,19 +39,21 @@ def imageReadFromraspberryPi(hoststr):
         
     jpg = bytes[a:b+2]
     bytes= bytes[b+2:]
-    # print(jpg)
     img = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),flags=1)
+    # 左右翻转 + 上下翻转 = 旋转180度
     flipped = cv2.flip(img, -1)
     return flipped
 
-def processImage(hoststr):
+def save_as_calibrate_image(hoststr):
     i = 1
     while 1:
-        img = imageReadFromraspberryPi(hoststr)
-        cv2.imwrite('./calibrateImage/cal' + str(i) +  ".png", img)
-        print("cal" + str(i) + " successfully")
-        time.sleep(0.5)
-        i+=1
+        img = read_image_from_RPi(hoststr)
+        cv2.imwrite(os.path.join("calibrate_images", 'cal' + str(i) + ".jpg"), img)
+        print("save cal" + str(i) + " successfully")
+        # 每3秒变动棋盘图位置
+        time.sleep(3)
+        i += 1
+
 
 if __name__ == '__main__':
-    processImage(hoststr)
+    save_as_calibrate_image(hoststr)

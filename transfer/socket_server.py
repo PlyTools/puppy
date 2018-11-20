@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-import re
-import socket
-import cv2
 import socketserver
 import sys
-import numpy as np
 import threading
 sys.path.append("../")
 from config import config
-from lane.laneline_coord import *
+from lane.backup.laneline_coord import *
 from transfer.socket_client import SocketClient
 
 class VideoStreamHandler(socketserver.BaseRequestHandler):
